@@ -1,0 +1,1443 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>:- DM Diagnosis :-</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link href="css/style1.css" rel="stylesheet">
+<script src="js/jquery-latest.js" type="text/javascript"></script>
+<script src="js/calculation.js" type="text/javascript"></script>
+<script src="js/categoryrank-calc.js" type="text/javascript"></script>
+<script>
+function save()
+{
+	
+	
+	 
+	var str= $("form").serialize();
+	$.ajax({
+		url: 'save-quality.php',
+		type: "POST",
+		async: false,
+		data:"&"+str,
+		success: function(data) {
+			//alert(data);
+								if(data== 1){
+									
+									window.location.href='quality-management.php?msg=1';
+									return false;
+						
+								}else if(data == 2)
+									{
+										//alert(data);	
+										window.location.href ='quality-management.php?msg=2';
+										return false;
+									}else if(data == 0)			
+										{				
+											//alert(data);
+											window.location.href ='quality-management.php?msg=3';
+											return false;
+										}
+        					}
+		});
+	return false;
+	
+	
+}
+function validatecomments() 
+{
+	  var dnp1=document.getElementById('diagnosis_result_dnp').value;
+      var dnp2=document.getElementById('kaizen_idea_dnp').value;
+      var dnr1=document.getElementById('diagnosis_result_dnr').value;
+      var dnr2=document.getElementById('kaizen_idea_dnr').value;
+	
+	if(dnp1.trim() == '')
+	{
+		
+		alert("Please enter the comments");
+		document.getElementById("diagnosis_result_dnp").focus();
+		return false;
+	}
+	if(dnp2.trim() == '')
+	{
+		
+		alert("Please enter the comments");
+		document.getElementById("kaizen_idea_dnp").focus();
+		return false;
+	}
+	if(dnr1.trim() == '')
+	{
+		
+		alert("Please enter the comments");
+		document.getElementById("diagnosis_result_dnr").focus();
+		return false;
+	}
+	if(dnr2.trim() == '')
+	{
+		
+		alert("Please enter the comments");
+		document.getElementById("kaizen_idea_dnr").focus();
+		return false;
+	}
+
+	document.getElementById("hdaction1").value=1;
+	//return true;
+	 save();
+	
+}
+</script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="title">
+			
+			
+
+<h2 style="text-align: center; display: inline-block; width: 100%;">
+				Daily Management Diagnosis  <span style="float: right;"><a
+					class="logout" href="Logout.php">Logout</a> </span>
+</h2>
+<div>
+<ul class="menu">
+<li> <a  href="tqm-teamwork.php">TQM & Teamwork</a></li>
+<li> <a  class="active"  href="quality-management.php">Quality Management</a></li>
+<li> <a  href="standard-operation.php">Standard Operation</a></li>
+<li> <a  href="skill-management.php">Skill Management</a></li>
+<li> <a  href="work-allocation.php">Work Allocation</a></li>
+<li> <a  href="facility-management.php">Facility Management</a></li>
+<li> <a  href="safety-environment.php">Safety & Environment</a></li>
+<li> <a  href="cost-management.php">Cost Management</a></li>
+<li> <a  href="report.php" style="border-right:none;">Report</a></li>
+
+
+<li> <a  href="zone_change.php" style="border-right:none;">Zone Change</a></li>
+
+<li> <a  href="allreport.php" style="border-right:none;">All Report</a></li>
+
+<div class="clear"></div>
+</ul>
+
+</div>			<h3>Diagnosis Category : Quality Management</h3>
+			<span id="details-tag" style="width: 100%; text-align: right; float: right;">
+			<td class="border0 padd1"><b>Auditee:</b></td>
+			<td class="border0 edit-data"></td><br>
+			<td class="border0 padd1"><b>Auditor:</b></td>
+			<td class="border0 edit-data">Suresh kumar.M </td>
+			</span>
+
+		</div>
+		<div id="message"
+			style="color: green; text-align: center; font-weight: bold;">
+					</div>
+		<div id="message"
+			style="color: red; text-align: center; font-weight: bold;">
+					</div>
+		&nbsp; &nbsp; &nbsp; &nbsp;
+		<div class="table-div">
+			<form name="quality" method="post">
+				<table cellpadding="0" cellspacing="0">
+									<input type="hidden" name="hdaction1" id="hdaction1" value="">
+					<input type="hidden" name="level_totaldnp1" id="level_totaldnp1"
+						value="0">
+					<input type="hidden" name="level_totaldnp2" id="level_totaldnp2"
+						value="0">
+					<input type="hidden" name="level_totaldnp3" id="level_totaldnp3"
+						value="0">
+					<input type="hidden" name="level_totaldnp4" id="level_totaldnp4"
+						value="0">
+					<input type="hidden" name="level_totaldnp5" id="level_totaldnp5"
+						value="0">
+					<input type="hidden" name="sub_total" id="sub_total" value="">
+
+					<!-- <div id="msg1" style="text-align: center; color: green;"></div>
+	<div id="msg3" style="text-align: center; color: red;"></div>
+	<div id="msg2" style="text-align: center; color: red;"></div>
+	<div id="msg4" style="text-align: center; color: green;"></div> -->
+					<tbody>
+						<tr class="bg-gray">
+							<th style="width: 10%;" rowspan="2">Evaluation Item</th>
+							<th style="width: 7%" class="small" colspan="5">Level</th>
+							<th style="width: 20%;" rowspan="2">Alliance Compliance
+								Requirement</th>
+							<th style="width: 20%;" rowspan="2">Check Item</th>
+							<th style="width: 7%" class="small" colspan="4">How</th>
+							<th class="big" rowspan="2">Evaluation / Scoring Standard to
+								achieve level</th>
+						</tr>
+						<tr class="bg-gray">
+							<th style="width: 1%">1</th>
+							<th style="width: 1%">2</th>
+							<th style="width: 1%">3</th>
+							<th style="width: 1%">4</th>
+							<th style="width: 1%">5</th>
+							<th>S</th>
+							<th>D</th>
+							<th>O</th>
+							<th>G</th>
+
+						</tr>
+
+						<!--1st row -->
+												<input type="hidden" name="hidp11" id="hidp11"
+							value="">
+						<tr>
+							<td rowspan="16" class="text-center"><b>Never produce Defects</b>
+							</td>
+							<td class="padd0 text-center"><select name="dnp_11" id="dnp_11"
+								onchange="dnp_level11(this); actualscorequality1();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select>
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>1.1 The SV understands & can demonstrate the Quality
+								Assurance requirements within the zone & can explain the purpose
+								of the appropriate documents</td>
+							<td>
+								<ul>
+									<li>- Engineering OS</li>
+									<li>- Inspection standards</li>
+									<li>- Operation Requirement Table</li>
+								</ul>
+							</td>
+							<td class="text-center">0</td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>
+								<h3>The SV knows and can explain :</h3>
+								<ul>
+									<li>where to get his quality assurance checks from</li>
+									<li>the purpose of the documents</li>
+								</ul>
+							</td>
+
+						</tr>
+
+						<!--2nd row -->
+												<input type="hidden" name="hidp12" id="hidp12"
+							value="">
+						<tr>
+							<td class="padd0 text-center"><select name="dnp_12" id="dnp_12"
+								onchange="dnp_level12(this); actualscorequality1();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select>
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>1-2 There is a 4M change management system in place and the
+								Supervisor can explain the purpose of 4M change management <span
+								class="colorred">(planned or un-planned).</span>
+							</td>
+							<td>
+								<ul>
+									<li>- 4 M Change management</li>
+									<li>- SV knowledge</li>
+								</ul>
+							</td>
+							<td class="text-center">0</td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>The SV
+								<ul>
+									<li>- knows and can explain the 4M change Management system</li>
+								</ul>
+							</td>
+
+						</tr>
+						<!--2nd A row -->
+												<input type="hidden" name="hidp13" id="hidp13"
+							value="">
+						<tr>
+							<td class="padd0 text-center"><select name="dnp_13" id="dnp_13"
+								onchange="dnp_level13(this); actualscorequality1();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select>
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>1-3 Operators who work on an assignment with an Important
+								A/B/C (Nissan), CSR (Renault) components or characteristics have
+								been trained and certified to do so</td>
+							<td>
+								<ul>
+									<li>- Importance A/B/C & CSR Training records</li>
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>The SV can demonstrate that Team members assigned to
+								A/B/C/CSR operations in ILU planning have been trained and
+								certified</td>
+
+						</tr>
+						<!--3rd row -->
+												<input type="hidden" name="hidp21" id="hidp21"
+							value="">
+						<tr>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnp_21" id="dnp_21"
+								onchange="dnp_level21(this); actualscorequality2();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select> <input type="hidden" name="quality_lev_1"
+								id="quality_lev_1"
+								value="0">
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>2-1 The SV can explain the setting method of Control Item List and the quality control status.
+								The SV uses the Control Item List to manage the quality within the zone</td>
+							<td>
+								<ul>
+									<li>- Control item list</li>
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>The SV show :</b>
+								<ul>
+									<li>CIL is being used to carry out daily confirmation checks at
+										the correct frequency</li>
+									<li>CIL contains relevant quality confirmation checks</li>
+								</ul>
+							</td>
+							</td>
+
+
+
+						</tr>
+						<!--4th row -->
+												<input type="hidden" name="hidp22" id="hidp22"
+							value="">
+						<tr>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnp_22" id="dnp_22"
+								onchange="dnp_level22(this); actualscorequality2();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select> <input type="hidden" name="quality_lev_2"
+								id="quality_lev_2"
+								value="0">
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>2-2 Tool and Gauge calibration is taking place in
+								 accordance with the standards, and the SV can explain the calibration records in their zone.</td>
+							<td>
+								<ul>
+									<li>- Tool & gauge calibration records</li>
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>The SV can show Tool & Gauge calibration has been completed
+								to the correct standard (frequency and specification)</td>
+						</tr>
+						<!--4th A row -->
+												<input type="hidden" name="hidp23" id="hidp23"
+							value="">
+						<tr>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnp_23" id="dnp_23"
+								onchange="dnp_level23(this); actualscorequality2();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select> <input type="hidden" name="quality_lev_3"
+								id="quality_lev_3"
+								value="0">
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>2-3 The Supervisor can demonstrate recent 4M Change control <span
+								class="colorred">(planned or un-planned) 
+							
+							</td>
+							<td>
+								<ul>
+									<li>- 4M changes</li>
+								</ul>
+							</td>
+							<td class="text-center">0</td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>The SV can show examples of recent of <span class="colorred">planned
+									and un-planned </span>4M Change management</td>
+						</tr>
+
+						<!--4th B row -->
+												<input type="hidden" name="hidp24" id="hidp24"
+							value="">
+						<tr>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnp_24" id="dnp_24"
+								onchange="dnp_level24(this); actualscorequality2();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select> <input type="hidden" name="quality_lev_4"
+								id="quality_lev_4"
+								value="0">
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>2-4 Operators carry out A/B/C and HV processes according to required QA standards. </td>
+							<td>
+								<ul>
+									<li>'- A/B/C/HV operation</li>
+								</ul>
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td>Validate :
+								<ul>
+									<li>the operator is performing the operation according to
+										standard operation</li>
+									<li>QA compliance within workstation (parts on floor, caps on,
+										…)</li>
+								</ul>
+							</td>
+						</tr>
+
+						<!--4th C row -->
+												<input type="hidden" name="hidp25" id="hidp25"
+							value="">
+						<tr>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnp_25" id="dnp_25"
+								onchange="dnp_level25(this); actualscorequality2();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select> <input type="hidden" name="quality_lev_5"
+								id="quality_lev_5"
+								value="0">
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>2-5 The SV can explain that the zone has 
+								a register of Poka Yoke systems and daily checks for zone Poka Yoke are being performed according to standard </td>
+							<td>
+								<ul>
+									<li>- Poka yoke register/List</li>
+									<li>- Poka yoke check records</li>
+								</ul>
+							</td>
+							<td class="text-center">0</td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td>Poka Yoke (PY) register/List exist and include all current PY
+								systems.
+								<ul>
+									<li>Check sheets are up to date</li>
+									<li>Checking process is performed to standard (when possible)</li>
+								</ul>
+							</td>
+						</tr>
+
+						<!--4th D row -->
+												<input type="hidden" name="hidp26" id="hidp26"
+							value="">
+						<tr>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnp_26" id="dnp_26"
+								onchange="dnp_level26(this); actualscorequality2();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select> <input type="hidden" name="quality_lev_6"
+								id="quality_lev_6"
+								value="0">
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>2-6 The zone demonstrates 'Quality Mindset' during all
+								aspects of product handling, processing and storage to prevent
+								potential quality concerns.</td>
+							<td>
+								<ul>
+									<li>- Shop floor</li>
+								</ul>
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td>If 2 or more examples/evidence of poor Quality Mindset which
+								could cause poor quality being produced, then this level is not
+								achieved.</td>
+						</tr>
+						<!--5th row -->
+												<input type="hidden" name="hidp31" id="hidp31"
+							value="">
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnp_31" id="dnp_31"
+								onchange="dnp_level31(this); actualscorequality3();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select> <input type="hidden" name="quality_qdp_31"
+								id="quality_qdp_31"
+								value="0">
+							</td>
+							<td></td>
+							<td></td>
+							<td>3-1 Issues identified using the Control Item List (CIL) are
+								quickly <span class="colorred textline">identified &</span>
+								corrected.</td>
+							<td>
+								<ul>
+									<li>- Control Item List</li>
+									<li>- Quick actions</li>
+								</ul>
+							</td>
+							<td class="text-center">0</td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>* When concerns are found they are corrected quickly to return to standard<br>
+								* Check the record for the previous 3 months and it shows no improper management. </td>
+
+						</tr>
+
+						<!--5th row -->
+												<input type="hidden" name="hidp32" id="hidp32"
+							value="">
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnp_32" id="dnp_32"
+								onchange="dnp_level32(this); actualscorequality3();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select> <input type="hidden" name="quality_qdp_32"
+								id="quality_qdp_32"
+								value="0">
+							</td>
+							<td></td>
+							<td></td>
+							<td>3-2 The SV can explain the procedures to address Poka Yoke concerns. 
+Issues identified during zone Poka Yoke checks are quickly corrected using back up procedures.  </td>
+							<td>
+								<ul>
+									<li>- Poka yoke check records</li>
+									<li>- Quick actions</li>
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td>'- For the identified NG, backup procedures are defined. <br>
+- When concerns are found they are rectified quickly to return to standard <br>
+- Check the record for the previous 3 months.</td>
+
+						</tr>
+
+						<!--5th row -->
+												<input type="hidden" name="hidp33" id="hidp33"
+							value="">
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnp_33" id="dnp_33"
+								onchange="dnp_level33(this); actualscorequality3();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select> <input type="hidden" name="quality_qdp_33"
+								id="quality_qdp_33"
+								value="0">
+							</td>
+							<td></td>
+							<td></td>
+							<td>3-3 The SV can explain the issues identified during Tool and Gauge calibration and how they corrected them based on action rule or backup procedures.</td>
+							<td>
+								<ul>
+									<li>'- Tool and gauge calibration records</li>
+									<li>- Action rule or backup procedures</li>
+								</ul>
+							</td>
+							<td class="text-center">0</td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>'- When concerns are found they are rectified quickly to return to standard<br>
+* Check the record for the previous 3 months.</td>
+
+						</tr>
+
+						<!--5th row -->
+												<input type="hidden" name="hidp34" id="hidp34"
+							value="">
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnp_34" id="dnp_34"
+								onchange="dnp_level34(this); actualscorequality3();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select> <input type="hidden" name="quality_qdp_34"
+								id="quality_qdp_34"
+								value="0">
+							</td>
+							<td></td>
+							<td></td>
+							<td>3-4 Quality confirmation checks are taking place as instructed in Operation Sheet and issues identified are quickly corrected.</td>
+							<td>
+								<ul>
+									<li>'- Quality confirmation check records as instructed in OS (SV / Zone responsibility only) 
+   (for example Torque Confirmation, Body Chisel Check, Paint Film Thickness)<br>
+- Quick actions</li>
+								</ul>
+
+							</td>
+							<td class="text-center">0</td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>
+								<ul>
+									<li>- Quality confirmation checks must be carried out as instructed in OS.</li>
+									<li>- Any deviation from specification must be documented and rectified quickly to return to standard.</li>
+								</ul>
+							</td>
+
+						</tr>
+
+
+						<!--6th row -->
+												<input type="hidden" name="hidp41" id="hidp41"
+							value="">
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnp_41" id="dnp_41"
+								onchange="dnp_level41(this); actualscorequality4();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select></td>
+							<td></td>
+							<td>4-1 The SV can show and explain the examples of pro-active quality improvement not to produce defects.
+Supervisor is pro-actively implementing quality improvement activities to eliminate the potential for defects.</td>
+							<td>
+								<ul>
+									<li>-'* Examples of pro-active improvement
+ (Quality Poka Yoke, Best practice adoption, Prior improvement for 4M change, Horizontal LLR deployment, Digitization, etc.)</li>
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td>SV can produce recent & relevant examples of proactive quality improvement activity.
+Improvement must be within previous 3 months. <br>
+* Any type of Reactive countermeasure is no good in this level. 
+							
+							</td>
+
+						</tr>
+
+
+						<!--5th row -->
+												<input type="hidden" name="hidp51" id="hidp51"
+							value="">
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnp_51" id="dnp_51"
+								onchange="dnp_level51(this); actualscorequality5();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select></td>
+							<td>5-1 The SV can explain quality improvement ideas that eliminated inspections in the process. 
+Supervisor implemented quality improvement ideas against human error that has eliminated the need for inspection (NVA) within the shops process. 
+							
+							</td>
+							<td>
+								<ul>
+									<li>- Improvement for elimination of inspection (poka yoke,
+										design change…)</li>
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td>SV can produce recent & relevant examples of inspection
+								reduction.</td>
+
+						</tr>
+
+
+						<!--5th row -->
+												<input type="hidden" name="hidp52" id="hidp52"
+							value="">
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnp_52" id="dnp_52"
+								onchange="dnp_level52(this); actualscorequality5();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select>
+							</td>
+							<td>5-2 The SV shares improvement ideas above Level 4, and can explain the ideas adopted by other plants / shops. 
+The Supervisor demonstrates 'Quality Mindset' and develops best practices suitable for horizontal deployment.</td>
+							<td>
+								<ul>
+									<li>- Creation of Best practices & innovation</li>
+									<li>* Shared Club Métier items</li>
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td>SV can produce recent & relevant examples of best practices innovation<br>
+							(e.g. Improvement in 4-1 & 5-1)</b>
+							</td>
+
+						</tr>
+
+
+
+						{{!-- //**
+								Newly Added Row
+						// --}}
+							<!--5th row -->
+												<input type="hidden" name="hidp52" id="hidp52"
+							value="">
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnp_52" id="dnp_52"
+								onchange="dnp_level52(this); actualscorequality5();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select>
+							</td>
+							<td>5-3 All quality targets are achieved and there is no defect outflow attributed to operators</td>
+							<td>
+								<ul>
+									<li>'* Quality Data</li>
+									
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td ></td>
+							<td>All zone quality targets have been achieved and there are no defects which can be attributed to operator error within the previous month</b>
+							</td>
+
+						</tr>
+
+
+
+
+						<!--score row -->
+						<input type="hidden" name="itemiddnp" id="itemiddnp"
+							value="">
+						<input type="hidden" name="item_scorednp" id="item_scorednp"
+							value="0">
+						<tr>
+							<td class="text-center score-tit">Item Score</td>
+							<td colspan="5" class="text-center"><span id="total_itemdnp">0							</span></td>
+							<td colspan="7" class="bg-gray"></td>
+
+						</tr>
+						<!--- for comments form auditor ---->
+											<input type="hidden" name="Commentiddnp" id="Commentiddnp"
+							value="">
+						<tr >
+							
+							<td colspan="7" style="text-align: center;"><b>Diagnosis Result<br>
+												(Result comments from Auditor)<b></td>
+							<td colspan="6" style="text-align: center; color: blue;"><b >Kaizen Idea<br>
+												(Recommended actions from the Auditor)</b></td>
+						</tr>
+						<tr >
+							<td colspan="7" class="item2"><textarea rows="7" cols="50" id="diagnosis_result_dnp" name="diagnosis_result_dnp" style="width: 99%;" spellcheck="true" ></textarea></td>
+							<td colspan="6" class="item2"><textarea rows="7" cols="50" id="kaizen_idea_dnp" name="kaizen_idea_dnp" style="width: 99%;" spellcheck="true" ></textarea></td>
+						</tr>
+						<!--- for comments form auditor  ------------->
+						
+
+						<!--Do not rceive row -->
+
+						<!--1st row -->
+												<input type="hidden" name="hdaction2" id="hdaction2" value="">
+
+						<input type="hidden" name="level_totaldnr1" id="level_totaldnr1"
+							value="0">
+						<input type="hidden" name="level_totaldnr2" id="level_totaldnr2"
+							value="0">
+						<input type="hidden" name="level_totaldnr3" id="level_totaldnr3"
+							value="0">
+						<input type="hidden" name="level_totaldnr4" id="level_totaldnr4"
+							value="0">
+						<input type="hidden" name="level_totaldnr5" id="level_totaldnr5"
+							value="0">
+						<input type="hidden" name="sub_totaldnr" id="sub_totaldnr"
+							value="">
+													<input type="hidden" name="hidr11" id="hidr11"
+							value="">
+						<tr>
+							<td rowspan="14" class="text-center"><b>Never receive, Never pass
+									Defects</b></td>
+							<td class="padd0 text-center"><select name="dnr_11" id="dnr_11"
+								onchange="dnr_level11(this); actualscorequality1();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select> <input type="hidden" name="quality_qdr_11"
+								id="quality_qdr_11"
+								value="0">
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>1-1 Check the details of QRQC Call / Line Stop standard.<br>The Supervisor has a defined standard for when to use &
+								how to react to the 'QRQC call' <span class="colorred textline">/
+									line stop</span> system when defects occur.</td>
+							<td>
+								<ul>
+									<li>* QRQC call standard</li>
+							
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>
+								<ul>
+
+									<li>* QRQC Call standard exists and contains details on when to
+										activate and how to react, including upstream communication</li>
+
+								</ul>
+							</td>
+
+						</tr>
+						<!-- 2nd row-->
+												<input type="hidden" name="hidr12" id="hidr12"
+							value="">
+						<tr>
+							<td class="padd0 text-center"><select name="dnr_12" id="dnr_12"
+								onchange="dnr_level12(this); actualscorequality1();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select> <input type="hidden" name="quality_qdr_12"
+								id="quality_qdr_12"
+								value="0">
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>1-2 For zones with in-line QC assignment, the zone has a
+								training and assessment process for Defect Detection, Quality
+								Judgment and Defect Repair capability where appropriate.</td>
+							<td>
+								<ul>
+									<li>* training material</li>
+									<li>* training records</li>
+									<li>* Operation Requirement Table</li>
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>
+								<ul>
+									<li>* Training material exists for in zone check man and
+										includes Detection, Judgment and Repair (where required)</li>
+									<li>* Training and certification records exists for assigned
+										check persons</li>
+								</ul>
+							</td>
+
+						</tr>
+						<!-- 3 rd row-->
+												<input type="hidden" name="hidr13" id="hidr13"
+							value="">
+						<tr>
+							<td class="padd0 text-center"><select name="dnr_13" id="dnr_13"
+								onchange="dnr_level13(this); actualscorequality1();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select> <input type="hidden" name="quality_qdr_13"
+								id="quality_qdr_13"
+								value="0">
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>1-3 Check the contents of Procedure or Action Standards are established to manage
+								defects leaving the zone.</td>
+							<td>
+								<ul>
+									<li>* Action standard for defect outflow</li>
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>Defect Outflow Action Standard exist and contains:
+								<ul>
+									<li>* Defect Containment.</li>
+									<li>* Establishment of defect cut-off / clean point</li>
+									<li>* Communication of cut-off / clean point and CM to Customer
+										(Downstream process).</li>
+								</ul>
+							</td>
+
+						</tr>
+						<!-- 3rd A row-->
+												<input type="hidden" name="hidr14" id="hidr14"
+							value="">
+						<tr>
+							<td class="padd0 text-center"><select name="dnr_14" id="dnr_14"
+								onchange="dnr_level14(this); actualscorequality1();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select> <input type="hidden" name="quality_qdr_14"
+								id="quality_qdr_14"
+								value="0">
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>1-4 The SV can explain QA checks performed by Check man in the zone or outside of his team. <br>The Supervisor understands and can explain the zones
+								quality assurance items within the QA check stations (out of
+								zone)</td>
+							<td>
+								<ul>
+									<li>Quality map / matrix</li>
+									<li>In-line check station job allocation</li>
+								</ul>
+							</td>
+							<td class="text-center">0</td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td>Supervisor can :
+								<ul>
+									<li>* explain what the checks are</li>
+									<li>* demonstrate where the checks take place</li>
+								</ul>
+							</td>
+
+						</tr>
+
+
+						<!-- row4-->
+												<input type="hidden" name="hidr21" id="hidr21"
+							value="">
+						<tr>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnr_21" id="dnr_21"
+								onchange="dnr_level21(this); actualscorequality2();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select>
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>2-1 The SV can explain actual QRQC call examples and call data.<br>QRQC call is being used for quality defects within the
+								process & data is recorded.</td>
+							<td>
+								<ul>
+									<li>* QRQC Call Standard compliance</li>
+									<li>* Help Call data</li>
+								</ul>
+							</td>
+							<td class="text-center">0</td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>
+								<ul>
+									<li>* There is documented evidence that QRQC call standard was
+										applied for recent Help Calls.</li>
+								</ul>
+							</td>
+
+						</tr>
+						<!-- row4A-->
+												<input type="hidden" name="hidr22" id="hidr22"
+							value="">
+						<tr>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnr_22" id="dnr_22"
+								onchange="dnr_level22(this); actualscorequality2();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select>
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>2-2 The SV can explain that Check man jobs include defect feedback time. <br>If the zone has an In-Line Quality check station. The Job
+								Allocation is dynamic and based on the zones quality performance
+								and includes sufficient time for feedback cycle.</td>
+							<td>
+								<ul>
+									<li>* Check man Job Allocation (S0S)</li>
+									<li>* QA Item list (for long cycle times)</li>
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td>
+								<ul>
+									<li>* Allocation reflects sufficient time to perform checks and
+										feedback within tact time.</li>
+									<li>* Check person is following JA.</li>
+									* Allocation reflects recent 4M changes and quality checks.
+						
+								</ul>
+							</td>
+							<!-- row4B-->
+														<input type="hidden" name="hidr23" id="hidr23"
+								value="">
+						</tr>
+						<tr>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnr_23" id="dnr_23"
+								onchange="dnr_level23(this); actualscorequality2();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select>
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>2-3 Action standards are implemented when defects are passed to the customer (leave the zone).<br>Operator defect tracking is in place. </td>
+							<td>
+								<ul>
+									<li>* Defect Outflow Action Standard compliance</li>
+									<li>* Operator defect tracking log</li>
+								</ul>
+							</td>
+							<td class="text-center">0</td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>
+								<ul>
+									<li>* Defect Outflow Action Standard has been followed for
+										recent defects</li>
+									<li>* Operators are assigned responsibility for all defects
+										that pass from zone including to the in zone check station.</li>
+								</ul>
+							</td>
+
+							<!-- row5-->
+														<input type="hidden" name="hidr31" id="hidr31"
+								value="">
+						
+						
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnr_31" id="dnr_31"
+								onchange="dnr_level31(this); actualscorequality3();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select>
+							</td>
+							<td></td>
+							<td></td>
+							<td>3-1 Check the quick actions taken for QRQC call / Line stop, and also data sorted/analyzed. <br>
+								QRQC call data (number of calls, reason for call, etc.)
+								are sorted and analysed to understand concerns. Quick actions
+								are taken to return to standard.</td>
+							<td>
+								<ul>
+									<li>* QRQC Call data</li>
+									<li><span class="colorred textline">* Root Cause Analysis</span>
+									</li>
+									<li>* Quick Action</li>
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>
+								<ul>
+
+									<li>* QRQC Call data has been sorted by Abnormality, Station,
+										Operator.</li>
+									<li>* Supervisor can produce documented evidence that Quick
+										action was taken for recent QRQC calls (upstream feedback,
+										return to standard)</li>
+								</ul>
+							</td>
+
+						</tr>
+						<!-- row5B-->
+												<input type="hidden" name="hidr32" id="hidr32"
+							value="">
+						<tr>
+							<td></td>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnr_32" id="dnr_32"
+								onchange="dnr_level32(this); actualscorequality3();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select>
+							</td>
+							<td></td>
+							<td></td>
+							<td>3-2 All defects which leave the zone are sorted and analysed
+								to understand concerns. Appropriate actions are identified.
+								Quick actions are taken for non compliance issue to return to standard.</td>
+							<td>
+								<ul>
+									<li>* Defect Outflow data</li>
+									<li><span class="colorred textline">* Root cause analysis</span>
+									</li>
+									<li>* Quick Action</li>
+									<li>* Job Observation sheets</li>
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>
+								<ul>
+									<li>* All zone defect outflow is collated, analysed and
+										prioritised (critical and major defects such as warranty, important process and major repairs).</li>
+									<li>* Quick Action has taken place for all defect outflow.</li>
+								</ul>
+							</td>
+
+						</tr>
+						<!-- row6-->
+												<input type="hidden" name="hidr41" id="hidr41"
+							value="">
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnr_41" id="dnr_41"
+								onchange="dnr_level41(this); actualscorequality4();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select>
+							</td>
+							<td></td>
+							<td>4-1 Check out countermeasures are implemented to solve the concerns
+								related to QRQC Calls/ Line Stop and there is no recurrence of identified causes.<span class="colorred textline">(including
+									defects that are received and produced)</span></td>
+							<td>
+								<ul>
+									<li>* Countermeasure for QRQC Calls</li>
+									<li>* QRQC Call data</li>
+									<li><span class="colorred ">* Root Cause Analysis</span></li>
+									
+
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td>
+								<ul>
+
+									<li>* It is evident that Countermeasures are in place and
+										eliminate root cause.</li>
+									<li><span class="colorred">* Root cause analysis has been
+											performed.</span></li>
+									<li>* Data indicates that the causes of related QRQC Calls have not returned.</li> 
+								</ul>
+							</td>
+
+						</tr>
+
+						<!-- row6 B-->
+												<input type="hidden" name="hidr42" id="hidr42"
+							value="">
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnr_42" id="dnr_42"
+								onchange="dnr_level42(this); actualscorequality4();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select>
+							</td>
+							<td></td>
+							<td>4-2 Countermeasures are taken against defects that have passed to the customer (downstream process), and check that there is no recurrence. </span></td>
+							<td>
+								<ul>
+									<li>* Root cause analysis</li>
+									<li>* Countermeasure confirmation</li>
+									<li>* SOS</li>
+									<li>* Outflow data</li>
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td class="text-center">0</td>
+							<td class="text-center">0</td>
+							<td>
+								<ul>
+									<li>* Defect has not reoccurred.</li>
+									<li>* Root cause analysis has been performed based on priority.</li>
+									<li>* Countermeasures have been communicated to the Operator.</li>
+									<li>* It is evident that Countermeasures are in place and
+										eliminate root cause.</li>
+									<li>* SOS / Standards have been revised to reflect the improved
+										condition.</li>
+									<li>* Defect has not reoccurred.</li>
+								</ul>
+							</td>
+
+						</tr>
+						<!-- row8-->
+												<input type="hidden" name="hidr51" id="hidr51"
+							value="">
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnr_51" id="dnr_51"
+								onchange="dnr_level51(this); actualscorequality5();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select>
+							</td>
+							<td>5-1 The Supervisor knows the quality KPI benchmarks for the Shop and results are achieving TOP3 level.</td>
+							<td>
+								<ul>
+									<li>* Countermeasure for All defect outflow</li>
+									<li>* Benchmark data</li>
+									<li>* Club Métier</li>
+								</ul>
+							</td>
+							<td class="text-center">0</td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>
+								<ul>
+									<li>* Supervisor can provide quality Bench Mark results relating to their Shop </li>
+									<li>* Shop is achieving TOP3 quality KPI benchmark results.</li>
+								</ul>
+							</td>
+
+						</tr>
+
+						<!-- row7-->
+												<input type="hidden" name="hidr52" id="hidr52"
+							value="">
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td class="padd0 text-center"><select name="dnr_52" id="dnr_52"
+								onchange="dnr_level52(this); actualscorequality5();">
+									<option value="0" 										selected="selected"  selected="selected">0</option>
+									<option value="1" >1</option>
+							</select>
+							</td>
+							<td>5-2 Through robust application of QC, the zone <span
+								class="colorred textline">is achieving it's Quality targets and
+							</span>has achieved zero defects outflow (zone
+								responsibility)from the zone for the previous 3 months.</td>
+							<td>
+								<ul>
+									<li>* Control charts</li>
+								</ul>
+							</td>
+							<td></td>
+							<td class="text-center">0</td>
+							<td></td>
+							<td></td>
+							<td>
+								<ul>
+
+									<li>Control Charts show <span class="colorred textline">that
+											all quality KPI's are achieving target and </span>no defects
+										that were the zones responsibility have 'out flowed' in the
+										previous 3 months.</li>
+								</ul>
+							</td>
+
+						</tr>
+
+
+
+						
+						<!--score row -->
+						<input type="hidden" name="itemiddnr" id="itemiddnr"
+							value="">
+						<input type="hidden" name="item_scorednr" id="item_scorednr"
+							value="0">
+						<tr>
+							<td class="text-center score-tit">Item Score</td>
+							<td colspan="5" class="text-center"><span id="total_itemdnr">0							</span></td>
+							<td colspan="7" class="bg-gray"></td>
+
+						</tr>
+						<!--- for comments form auditor ---->
+											<input type="hidden" name="Commentiddnr" id="Commentiddnr"
+							value="">
+						<tr >
+							
+							<td colspan="7" style="text-align: center;"><b>Diagnosis Result<br>
+												(Result comments from Auditor)<b></td>
+							<td colspan="6" style="text-align: center; color: blue;"><b >Kaizen Idea<br>
+												(Recommended actions from the Auditor)</b></td>
+						</tr>
+						<tr >
+							<td colspan="7" class="item2"><textarea rows="7" cols="50" id="diagnosis_result_dnr" name="diagnosis_result_dnr" style="width: 99%;"  spellcheck="true"></textarea></td>
+							<td colspan="6" class="item2"><textarea rows="7" cols="50" id="kaizen_idea_dnr" name="kaizen_idea_dnr" style="width: 99%;"  spellcheck="true"></textarea></td>
+						</tr>
+						<!--- for comments form auditor  ------------->
+
+						<tr class="item1">
+							<td colspan="6"><b>Category Score<b>
+							
+							</td>
+							<td colspan="2" rowspan="5" class="item2"><b class="score-tit">Diagnosis
+									Method:</b><br> 1. Commence diagnosis for level 1 for each
+								Evaluation Item.<br> 2. Continue the diagnosis by level, if the
+								Supervisors fails to deliver the Compliance Requirement within a
+								level, complete the rest of the level and stop the diagnosis
+								scoring for that particular Evaluation Item. If item is not
+								applicable give the score and move to next item.<br> 3. For
+								Diagnosis categories with more than 1 Evaluation Item, repeat
+								step 2 for the next Evaluation Item.</td>
+							<td colspan="5" rowspan="5" class="item2"><b class="score-tit">Key:</b><br>
+								S = Talk to and request information from the Supervisor.<br> D =
+								Request to see and then validate documentation.<br> O = Talk to
+								and request information from the Operator.<br> G = Validate the
+								actual condition in the Genba (shop floor).</td>
+
+						</tr>
+												<input type="hidden" name="c_id" id="c_id"
+							value="">
+						<input type="hidden" name="score1" id="score1"
+							value="0">
+						<input type="hidden" name="score2" id="score2"
+							value="0">
+						<input type="hidden" name="score3" id="score3"
+							value="0">
+						<input type="hidden" name="score4" id="score4"
+							value="0">
+						<input type="hidden" name="score5" id="score5"
+							value="0">
+						<tr>
+							<td>Available score</td>
+							<td>/7</td>
+							<td>/9</td>
+							<td>/6</td>
+							<td>/3</td>
+							<td>/5</td>
+						</tr>
+						<tr>
+							<td>Actual Score</td>
+							<td id="level1">0							</td>
+							<td id="level2">0							</td>
+							<td id="level3">0							</td>
+							<td id="level4">0							</td>
+							<td id="level5">0							</td>
+						</tr>
+						<input type="hidden" name="achieve1" id="achieve1"
+							value="0">
+						<input type="hidden" name="achieve2" id="achieve2"
+							value="0">
+						<input type="hidden" name="achieve3" id="achieve3"
+							value="0">
+						<input type="hidden" name="achieve4" id="achieve4"
+							value="0">
+						<input type="hidden" name="achieve5" id="achieve5"
+							value="0">
+						<tr>
+							<td>Achievement %</td>
+							<td id="achievement1">0%</td>
+							<td id="achievement2">0%</td>
+							<td id="achievement3">0%</td>
+							<td id="achievement4">0%</td>
+							<td id="achievement5">0%</td>
+						</tr>
+						<tr>
+							<td>Category Rank</td>
+							<input type="hidden" name="categorydnp" id="categorydnp"
+								value="0.0">
+							<td colspan="5" class="text-center" id="category-rankdnp">0.0							</td>
+						</tr>
+
+
+
+
+					</tbody>
+
+					</div>
+				</table>
+
+				<div style="float: right">
+					<button type="button" class="next"
+						onclick="validatecomments();">Save</button>
+			
+			</form>
+
+
+		</div>
+
+	</div>
+
+</body>
+</html>

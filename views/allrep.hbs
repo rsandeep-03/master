@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>:- DM Diagnosis :-</title>
+<link href='css/styless.css' rel='stylesheet' type='text/css'>
+<link href="css/style.css" rel="stylesheet">
+  <link href="css/style1.css" rel="stylesheet"> 
+  <link href="css/style.css" rel="stylesheet"> 
+  <script src="js/jquery-latest.js" type="text/javascript"></script>
+  <script src="js/calculation.js" type="text/javascript"></script>
+  <script src="js/chart-list.js"></script>
+  <script src="js/RadarChart.js"></script>
+  <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="css/jquery-ui.css">
+  <script src="js/jquery-1.12.4.js"></script>
+  <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.min.js"></script>
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+  <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+  <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+    <!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+<script src="js/jquery-ui1.js"></script>
+  <script>
+
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+    $( function() {
+    $( "#datepickers" ).datepicker();
+  } );
+  </script>
+  <style type="text/css">
+    #chart-container {
+   background: white;
+}
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+  </style>
+</head>
+
+<body style="background:#fff; padding:0; margin:0;">
+<div class="container">
+<form class="download" action="/DMD/allreport.php" method="post" id="export-form">
+
+<div class="title">
+
+
+<h2 style="text-align: center; display: inline-block; width: 100%;">
+				Daily Management Diagnosis  <span style="float: right;"><a
+					class="logout" href="Logout.php">Logout</a> </span>
+</h2>
+<div>
+<ul class="menu">
+<li> <a  href="tqm-teamwork.php">TQM & Teamwork</a></li>
+<li> <a  href="quality-management.php">Quality Management</a></li>
+<li> <a  href="standard-operation.php">Standard Operation</a></li>
+<li> <a  href="skill-management.php">Skill Management</a></li>
+<li> <a  href="work-allocation.php">Work Allocation</a></li>
+<li> <a  href="facility-management.php">Facility Management</a></li>
+<li> <a  href="safety-environment.php">Safety & Environment</a></li>
+<li> <a  href="cost-management.php">Cost Management</a></li>
+<li> <a  href="report.php" style="border-right:none;">Report</a></li>
+
+
+<li> <a  href="zone_change.php" style="border-right:none;">Zone Change</a></li>
+
+<li> <a  href="allreport.php" style="border-right:none;">All Report</a></li>
+
+<div class="clear"></div>
+</ul>
+
+</div><div align="center">
+<form>
+From Date:
+<input type="txt" name="from_date" id="datepicker">
+To Date:
+<input type="txt" name="to_date" id="datepickers">
+<input type="submit" value="Search"> <br>
+</form>
+</div>
+</div>
+<br>
+<div align="center">
+  <table class="display" style="width:50%">
+    <thead bgcolor="#0000ff">
+    <tr>
+      <th>Total Audit</th>
+      <th>Zone Wise Audit</th>
+      <th>MSPO Audit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr align="center">
+      <td>1</td>
+      <td id="zone_count"></td>
+      <td id="mspo_count"></td>     
+    </tr>
+  </tbody>
+  </table>
+</div>
+<br>
+<!-- <form action="all_report_excel.php" method="POST"> -->
+  <!-- <input type="submit" class="button" name="excel" value="Export Excel"> -->
+<!-- <a href="all_report_excel.php" class="btn btn-primary">Excel</a> -->
+ <form action="all_report_excel.php" method="POST">
+              <!-- <button  name="excel">Excel</button> -->
+              <input type="submit"  name="excel" value="Excel">
+              <input type="hidden" name="from_date" value="">
+              <input type="hidden" name="to_date" value="">
+
+ </form>
+<!-- </form> -->
+<br>
+<table id="example" class="display" style="width:100%">
+        <thead bgcolor="#0000ff">
+            <tr>
+                <th>ID</th>
+                <th>AUDIT DATE</th>
+                <th>SSV RN ID</th>
+                <th>SSV NAME</th>
+                <th>SV ID</th>
+                <th>SV NAME</th>
+                <th>ZONE NAME</th>
+                <th>SHOP NAME</th>
+
+            </tr>
+        </thead>
+        <tbody>
+      <tr>
+        <td>1</td>
+                <td>10-11-2022</td>
+                <td>z003089</td>
+                
+                <td bgcolor="#ADD8E6">Nithis Kumar T</td>
+                
+                                <td>RN02093</td>
+                <td>Gowtham</td>
+                <td>Casting</td>
+                <td>PWT 1</td>
+               
+            </tr>
+
+   
+ <script type="text/javascript">
+
+      var carnr = "1";
+      var a = "1";
+      var b = "1";
+      //var b = a-carnr; no need
+
+      document.getElementById("mspo_count").innerHTML = carnr;
+      document.getElementById("zone_count").innerHTML = b;
+ </script>        </tbody>
+    </table>
+</body>
+</html>

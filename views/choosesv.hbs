@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<link href='' rel='stylesheet' type='text/css'>
+<link href="css/style.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="js/jquery-latest.js">
+</script>
+<link href='css/styless.css' rel='stylesheet' type='text/css'>
+<link href="css/svstyle.css" rel="stylesheet">
+  <link href="css/style1.css" rel="stylesheet"> 
+  <link href="css/style.css" rel="stylesheet"> 
+  <script src="js/jquery-latest.js" type="text/javascript"></script>
+  <script src="js/calculation.js" type="text/javascript"></script>
+  <script src="js/chart-list.js"></script>
+	<script src="js/RadarChart.js"></script>
+  <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="css/jquery-ui.css">
+  <script src="js/jquery-1.12.4.js"></script>
+  <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+<script src="js/jquery-ui1.js"></script>
+<title>:- DM Diagnosis :-</title>
+
+</head>
+<script>
+function validate()
+{
+ /*if(document.getElementById("shop").value == "")	
+    {
+	  document.getElementById('valid').innerHTML="Please enter the shop name";
+      document.getElementById('shop').focus();
+           return false;
+    }
+   if(document.getElementById("experience").value == "")	
+   {
+	 document.getElementById('valid').innerHTML="Please enter the experience in zone";
+     document.getElementById('experience').focus();
+          return false;
+   }
+   if(document.getElementById("models").value == "")	
+   {
+	  document.getElementById('valid').innerHTML="Please enter the no of models";
+     document.getElementById('models').focus();
+          return false;
+   }
+  if(document.getElementById("tl").value == "")	
+  {
+	 document.getElementById('valid').innerHTML="Please enter the no of teamleaders";
+    document.getElementById('tl').focus();
+         return false;
+  }
+  if(document.getElementById("ror").value == "")	
+  {
+	  document.getElementById('valid').innerHTML="Please enter the ror";
+    document.getElementById('ror').focus();
+         return false;
+  }
+ if(document.getElementById("rto").value == "")	
+ {
+	 document.getElementById('valid').innerHTML="Please enter the rto";
+   document.getElementById('rto').focus();
+        return false;
+ }
+ if(document.getElementById("cycle-time").value == "")	
+ {
+	  document.getElementById('valid').innerHTML="Please enter the cycle-time";
+   document.getElementById('cycle-time').focus();
+        return false;
+ }
+if(document.getElementById("shifts").value == "")	
+{
+	 document.getElementById('valid').innerHTML="Please enter the no of shifts";
+  document.getElementById('shifts').focus();
+       return false;
+}
+if(document.getElementById("temp-ratio").value == "")	
+{
+  document.getElementById('valid').innerHTML="Please enter the temp-ratio";
+  document.getElementById('temp-ratio').focus();
+       return false;
+}
+
+	if(document.getElementById("zone").value == "0")	
+    {
+	  document.getElementById('valid').innerHTML="Please select the zone";
+      document.getElementById('zone').focus();
+           return false;
+    }
+   if(document.getElementById("super").value == "0")	
+   {
+	 document.getElementById('valid').innerHTML="Please select the supervisor";
+     document.getElementById('super').focus();
+          return false;
+   }
+}*/
+
+function getzonal(val){
+var a = document.getElementById("zone");
+var val = a.options[a.selectedIndex].text;
+// alert(val);
+var a1 = document.getElementById("shop");
+var val1 = a1.options[a1.selectedIndex].text;
+// alert(val1);
+	$.ajax({
+		url: 'getsv.php',
+		type: "POST",
+		// data:"zonal="+val+"&shop="+val1,
+		data: {zonal: val, shop: val1},
+		// data: {status: status, name: name},
+// 'code=' + code + '&userid=' + userid
+		success: function(data) {
+			
+			document.getElementById("superOpt").innerHTML=data;
+		}
+	});
+}
+
+function getzonalsv(val){
+var a = document.getElementById("zone");
+var val = a.options[a.selectedIndex].value;
+// alert(val);
+	$.ajax({
+		url: 'getsv.php',
+		type: "POST",
+		// data:"zonal="+val+"&shop="+val1,
+		data:"zonal="+val,
+		// data: {zonal: val, shop: val1},
+		// data: {status: status, name: name},
+// 'code=' + code + '&userid=' + userid
+		success: function(data) {
+			
+			document.getElementById("superOpt").innerHTML=data;
+				
+		}
+	});
+}
+
+function getzones(val)
+{
+var a = document.getElementById("shop");
+var val = a.options[a.selectedIndex].text;
+
+	// alert(selectedText);
+		$.ajax({
+		url: 'getzone.php',
+		type: "POST",
+		data:"shop="+val,
+		success: function(data) {
+			
+			document.getElementById("zones").innerHTML=data;
+				
+		}
+	});
+
+}
+function set_session()
+{
+var a = document.getElementById("zone");
+var val = a.options[a.selectedIndex].text;
+// alert(val);
+var a1 = document.getElementById("shop");
+var val1 = a1.options[a1.selectedIndex].text;
+
+var a2 = document.getElementById("super");
+var val2 = a2.options[a2.selectedIndex].text;
+
+	// alert(selectedText);
+		$.ajax({
+		url: 'set_session.php',
+		type: "POST",
+		data: {zonal: val, shop: val1, sv:val2},
+		success: function(data) {
+			
+			// document.getElementById("zones").innerHTML=data;
+				
+		}
+	});
+
+}
+function getdata()
+{
+	// alert();
+	var a = document.getElementById("zone");
+	var val = a.options[a.selectedIndex].text;
+
+	var a2 = document.getElementById("super");
+	var val2 = a2.options[a2.selectedIndex].text;
+	  $.ajax({
+	    url : 'svdata.php',
+	    type : 'POST',
+	    datatype : 'JSON',
+	    data : {
+	            zone : val,sv : val2	           
+	        },
+	    success : function(show){
+
+	        }
+	 });
+}
+</script>
+<body>
+<body style="margin:0px;">
+<div class="header" style="background: #0CC866 none repeat scroll 0% 0%;">
+<div class="container">
+	<!-- <div class="header-logo"></div> -->
+		<div class="header1">
+	<h1>
+	<span class="nissantext">Renault Nissan Automotive India Private Limited</span>
+	<!-- <span>Daily Management Diagnosis</span> -->
+	<!-- <span class="logout1"><a class="logout" href="Logout.php">Logout</a></span> -->
+	<span class="header-logo2" style="right: 100px;"></span>
+	<span class="alliance" style="float:right;margin-right:20px;"></span>
+	</h1>
+	</div>
+	</div>
+</div>
+
+
+<h2 style="text-align: center; display: inline-block; width: 100%;">
+				Daily Management Diagnosis  <span style="float: right;"><a
+					class="logout" href="Logout.php">Logout</a> </span>
+</h2>
+<div>
+<ul class="menu">
+<li> <a  href="tqm-teamwork.php">TQM & Teamwork</a></li>
+<li> <a  href="quality-management.php">Quality Management</a></li>
+<li> <a  href="standard-operation.php">Standard Operation</a></li>
+<li> <a  href="skill-management.php">Skill Management</a></li>
+<li> <a  href="work-allocation.php">Work Allocation</a></li>
+<li> <a  href="facility-management.php">Facility Management</a></li>
+<li> <a  href="safety-environment.php">Safety & Environment</a></li>
+<li> <a  href="cost-management.php">Cost Management</a></li>
+<li> <a  href="report.php" style="border-right:none;">Report</a></li>
+
+
+<li> <a  href="zone_change.php" style="border-right:none;">Zone Change</a></li>
+
+<li> <a  href="allreport.php" style="border-right:none;">All Report</a></li>
+
+<div class="clear"></div>
+</ul>
+
+</div><div style="display:none;" class="logo"></div>
+ <form name="csv" method="post" action="">
+<div style="width: 1160px; margin:60px auto 0;">
+ <div id="error" style="color:red; text-align: center; font-weight: bold;"><span id="valid"></span></div>
+<div class="login-block" style="margin:0 auto;">
+
+    <h1>choose your sv</h1>
+   
+    
+    <!-- <input type="text" id="zone" name="zone" value="" placeholder="Enter your Zone" class="sv-login" onkeyup="getzonal(this.value);" />-->
+	 <!--<select id="group" name="group" onchange="getgroup(this.value);">
+		<option value="0">Select group</option>
+		<br />
+<b>Warning</b>:  mysql_fetch_array() expects parameter 1 to be resource, null given in <b>D:\xampp\htdocs\DMD\Choose-sv.php</b> on line <b>272</b><br />
+	</select>
+	
+	-->
+
+		<select id="shop" name="shop" onchange="getzones(this.value);">
+		<option value="0">Select Shop</option>
+		<option value="Body # 1" >Body # 1</option><option value="Body # 2" >Body # 2</option><option value="Body # 3" >Body # 3</option><option value="Casting" >Casting</option><option value="IHQA" >IHQA</option><option value="MH Body" >MH Body</option><option value="MH PWT 1" >MH PWT 1</option><option value="MH TandC 1" >MH TandC 1</option><option value="MH TandC 2" >MH TandC 2</option><option value="Paint#1" >Paint#1</option><option value="Paint#2" >Paint#2</option><option value="Plastics " >Plastics </option><option value="PTQA#1" >PTQA#1</option><option value="PTQA#2" >PTQA#2</option><option value="PWT 1" >PWT 1</option><option value="PWT 2" >PWT 2</option><option value="PWT#2" >PWT#2</option><option value="PWT2" >PWT2</option><option value="Stamping Shop" >Stamping Shop</option><option value="TandC #1" >TandC #1</option><option value="TandC #2" >TandC #2</option><option value="VQA#1" >VQA#1</option><option value="VQA#2" >VQA#2</option>	</select>
+	<div id="zones">
+		<select id="zone" name="zone" onchange="getzonal();">
+		<option value="0">Select Zone</option>
+	</select>
+	</div>
+		
+    <div id="superOpt">
+	<select id="super" name="super" >
+	<option value="0" >Select supervisor</option>
+	</select>
+	</div>
+    <button type="submit" name="submit" id="submit" onclick="return validate();">Submit</button>
+    
+    
+</div>			
+
+</form>
+</body>
+
+</html>
